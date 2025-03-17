@@ -147,45 +147,26 @@ def genetic_algorithm(initial_grid):
         initial_population = create_initial_population(initial_grid, POPULATION_SIZE)
         
         # Run with tournament selection
-        start_time = time.time()
         tournament_gen = run_with_selection(initial_grid, initial_population.copy(), tournament_selection)
-        tournament_time = time.time() - start_time
         results['tournament']['generations'].append(tournament_gen)
-        results['tournament']['time'].append(tournament_time)
         
         # Run with roulette wheel selection
-        start_time = time.time()
         roulette_gen = run_with_selection(initial_grid, initial_population.copy(), roulette_wheel_selection)
-        roulette_time = time.time() - start_time
         results['roulette']['generations'].append(roulette_gen)
-        results['roulette']['time'].append(roulette_time)
         
-        print(f"  Tournament: {tournament_gen} generations, {tournament_time:.2f}s")
-        print(f"  Roulette:   {roulette_gen} generations, {roulette_time:.2f}s")
+        print(f"  Tournament: {tournament_gen} generations")
+        print(f"  Roulette:   {roulette_gen} generations")
     
     # Calculate and display averages
     avg_tournament_gen = sum(results['tournament']['generations']) / num_runs
-    avg_tournament_time = sum(results['tournament']['time']) / num_runs
     avg_roulette_gen = sum(results['roulette']['generations']) / num_runs
-    avg_roulette_time = sum(results['roulette']['time']) / num_runs
     
     print("\n=== Results Summary ===")
     print(f"Tournament Selection (Average of {num_runs} runs):")
     print(f"  Average generations: {avg_tournament_gen:.2f}")
-    print(f"  Average time: {avg_tournament_time:.2f}s")
     
     print(f"\nRoulette Wheel Selection (Average of {num_runs} runs):")
     print(f"  Average generations: {avg_roulette_gen:.2f}")
-    print(f"  Average time: {avg_roulette_time:.2f}s")
-    
-    # Calculate improvement percentages
-    if avg_roulette_gen > 0:
-        gen_improvement = ((avg_roulette_gen - avg_tournament_gen) / avg_roulette_gen) * 100
-        print(f"\nTournament selection is {gen_improvement:.2f}% faster in generations")
-    
-    if avg_roulette_time > 0:
-        time_improvement = ((avg_roulette_time - avg_tournament_time) / avg_roulette_time) * 100
-        print(f"Tournament selection is {time_improvement:.2f}% faster in time")
     
     return results
 

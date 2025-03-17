@@ -128,50 +128,35 @@ def genetic_algorithm(initial_grid):
         initial_population = create_initial_population(initial_grid, POPULATION_SIZE)
         
         # Run with single-point crossover
-        start_time = time.time()
         single_point_gen = run_with_crossover(initial_grid, initial_population.copy(), single_point_crossover)
-        single_point_time = time.time() - start_time
         results['single_point']['generations'].append(single_point_gen)
-        results['single_point']['time'].append(single_point_time)
         
         # Run with two-point crossover
-        start_time = time.time()
         two_point_gen = run_with_crossover(initial_grid, initial_population.copy(), two_point_crossover)
-        two_point_time = time.time() - start_time
         results['two_point']['generations'].append(two_point_gen)
-        results['two_point']['time'].append(two_point_time)
         
         # Run with uniform crossover
-        start_time = time.time()
         uniform_gen = run_with_crossover(initial_grid, initial_population.copy(), uniform_crossover)
-        uniform_time = time.time() - start_time
         results['uniform']['generations'].append(uniform_gen)
-        results['uniform']['time'].append(uniform_time)
         
-        print(f"  Single-point: {single_point_gen} generations, {single_point_time:.2f}s")
-        print(f"  Two-point:    {two_point_gen} generations, {two_point_time:.2f}s")
-        print(f"  Uniform:      {uniform_gen} generations, {uniform_time:.2f}s")
+        print(f"  Single-point: {single_point_gen} generations")
+        print(f"  Two-point:    {two_point_gen} generations")
+        print(f"  Uniform:      {uniform_gen} generations")
     
     # Calculate and display averages
     avg_single_point_gen = sum(results['single_point']['generations']) / num_runs
-    avg_single_point_time = sum(results['single_point']['time']) / num_runs
     avg_two_point_gen = sum(results['two_point']['generations']) / num_runs
-    avg_two_point_time = sum(results['two_point']['time']) / num_runs
     avg_uniform_gen = sum(results['uniform']['generations']) / num_runs
-    avg_uniform_time = sum(results['uniform']['time']) / num_runs
     
     print("\n=== Results Summary ===")
     print(f"Single-point Crossover (Average of {num_runs} runs):")
     print(f"  Average generations: {avg_single_point_gen:.2f}")
-    print(f"  Average time: {avg_single_point_time:.2f}s")
     
     print(f"\nTwo-point Crossover (Average of {num_runs} runs):")
     print(f"  Average generations: {avg_two_point_gen:.2f}")
-    print(f"  Average time: {avg_two_point_time:.2f}s")
     
     print(f"\nUniform Crossover (Average of {num_runs} runs):")
     print(f"  Average generations: {avg_uniform_gen:.2f}")
-    print(f"  Average time: {avg_uniform_time:.2f}s")
     
     # Find the best method
     methods = {
